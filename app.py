@@ -35,7 +35,6 @@ if uploaded_menu_file and uploaded_code_file:
     menu_ws = menu_wb[menu_sheet_name]
     code_ws = code_wb[code_sheet_name]
 
-    # メニュー変更依頼データ取得
     menu_data = []
 
     for row in menu_ws.iter_rows(min_row=2, values_only=True):
@@ -48,7 +47,6 @@ if uploaded_menu_file and uploaded_code_file:
             (media_code, menu_name, point, media_name)
         )
 
-    # プレビュー表示
     preview_rows = []
 
     for row in code_ws.iter_rows(min_row=2):
@@ -73,17 +71,14 @@ if uploaded_menu_file and uploaded_code_file:
 
     if st.button("上書き実行"):
 
-        # ピンク色
         rose_fill = PatternFill(
             start_color="FF66CC",
             end_color="FF66CC",
             fill_type="solid"
         )
 
-        # 塗りつぶし解除
         no_fill = PatternFill(fill_type=None)
 
-        # 既存のピンクをクリア
         for row in code_ws.iter_rows(min_row=2):
             row[2].fill = no_fill  # C列
             row[4].fill = no_fill  # E列
@@ -91,7 +86,6 @@ if uploaded_menu_file and uploaded_code_file:
 
         updated_count = 0
 
-        # 上書き処理
         for row in code_ws.iter_rows(min_row=2):
             target_code = row[1].value  # B列
 
@@ -99,15 +93,12 @@ if uploaded_menu_file and uploaded_code_file:
 
                 if target_code == m_code:
 
-                    # C列 メニュー名
                     row[2].value = m_name
                     row[2].fill = rose_fill
 
-                    # E列 ポイント
                     row[4].value = m_point
                     row[4].fill = rose_fill
 
-                    # F列 媒体名
                     row[5].value = m_media_name
                     row[5].fill = rose_fill
 
